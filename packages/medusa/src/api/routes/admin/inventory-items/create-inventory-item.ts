@@ -1,14 +1,17 @@
-import { FlagRouter, ManyToManyInventoryFeatureFlag } from "@medusajs/utils"
+import {
+  FlagRouter,
+  ManyToManyInventoryFeatureFlag,
+  MedusaError,
+} from "@medusajs/utils"
 import { IsNumber, IsObject, IsOptional, IsString } from "class-validator"
 import {
-  createInventoryItems,
   CreateInventoryItemActions,
-  pipe,
-} from "@medusajs/workflows"
+  createInventoryItems,
+} from "@medusajs/core-flows"
+import { pipe } from "@medusajs/workflows-sdk"
 import { ProductVariantInventoryService } from "../../../../services"
 
 import { FindParams } from "../../../../types/common"
-import { MedusaError } from "@medusajs/utils"
 
 /**
  * @oas [post] /admin/inventory-items
@@ -40,6 +43,30 @@ import { MedusaError } from "@medusajs/utils"
  *       .then(({ inventory_item }) => {
  *         console.log(inventory_item.id);
  *       })
+ *   - lang: tsx
+ *     label: Medusa React
+ *     source: |
+ *       import React from "react"
+ *       import { useAdminCreateInventoryItem } from "medusa-react"
+ *
+ *       const CreateInventoryItem = () => {
+ *         const createInventoryItem = useAdminCreateInventoryItem()
+ *         // ...
+ *
+ *         const handleCreate = (variantId: string) => {
+ *           createInventoryItem.mutate({
+ *             variant_id: variantId,
+ *           }, {
+ *             onSuccess: ({ inventory_item }) => {
+ *               console.log(inventory_item.id)
+ *             }
+ *           })
+ *         }
+ *
+ *         // ...
+ *       }
+ *
+ *       export default CreateInventoryItem
  *   - lang: Shell
  *     label: cURL
  *     source: |
@@ -182,6 +209,7 @@ function generateAttachInventoryToVariantHandler(
 /**
  * @schema AdminPostInventoryItemsReq
  * type: object
+ * description: "The details of the inventory item to create."
  * required:
  *   - variant_id
  * properties:

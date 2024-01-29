@@ -22,7 +22,12 @@ packages/*
 !packages/create-medusa-app
 !packages/product
 !packages/orchestration
-!packages/workflows
+!packages/workflows-sdk
+!packages/core-flows
+!packages/types
+!packages/medusa-react
+!packages/workflow-engine-redis
+!packages/workflow-engine-inmemory
 
 
 **/models/*

@@ -235,6 +235,10 @@ get:
       label: JS Client
       source:
         $ref: ../code_samples/JavaScript/admin_batch-jobs/get.js
+    - lang: tsx
+      label: Medusa React
+      source:
+        $ref: ../code_samples/tsx/admin_batch-jobs/get.tsx
     - lang: Shell
       label: cURL
       source:
@@ -287,6 +291,10 @@ post:
       label: JS Client
       source:
         $ref: ../code_samples/JavaScript/admin_batch-jobs/post.js
+    - lang: tsx
+      label: Medusa React
+      source:
+        $ref: ../code_samples/tsx/admin_batch-jobs/post.tsx
     - lang: Shell
       label: cURL
       source:

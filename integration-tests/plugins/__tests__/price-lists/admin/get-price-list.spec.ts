@@ -25,7 +25,7 @@ const env = {
   MEDUSA_FF_MEDUSA_V2: true,
 }
 
-describe("GET /admin/price-lists/:id", () => {
+describe.skip("GET /admin/price-lists/:id", () => {
   let dbConnection
   let appContainer
   let shutdownServer
@@ -81,7 +81,6 @@ describe("GET /admin/price-lists/:id", () => {
         {
           amount: 3000,
           currency_code: "usd",
-          rules: {},
         },
       ],
       rules: [],

@@ -1,6 +1,6 @@
 import { WorkflowTypes } from "@medusajs/types"
-import { FlagRouter } from "@medusajs/utils"
-import { UpdateProductVariants } from "@medusajs/workflows"
+import { FlagRouter, MedusaV2Flag } from "@medusajs/utils"
+import { UpdateProductVariants } from "@medusajs/core-flows"
 import { Type } from "class-transformer"
 import {
   IsArray,
@@ -12,8 +12,6 @@ import {
   ValidateNested,
 } from "class-validator"
 import { EntityManager } from "typeorm"
-
-import { MedusaV2Flag } from "@medusajs/utils"
 import { defaultAdminProductFields, defaultAdminProductRelations } from "."
 import {
   PricingService,
@@ -66,6 +64,41 @@ import { validator } from "../../../../utils/validator"
  *       .then(({ product }) => {
  *         console.log(product.id);
  *       })
+ *   - lang: tsx
+ *     label: Medusa React
+ *     source: |
+ *       import React from "react"
+ *       import { useAdminUpdateVariant } from "medusa-react"
+ *
+ *       type Props = {
+ *         productId: string
+ *         variantId: string
+ *       }
+ *
+ *       const ProductVariant = ({
+ *         productId,
+ *         variantId
+ *       }: Props) => {
+ *         const updateVariant = useAdminUpdateVariant(
+ *           productId
+ *         )
+ *         // ...
+ *
+ *         const handleUpdate = (title: string) => {
+ *           updateVariant.mutate({
+ *             variant_id: variantId,
+ *             title,
+ *           }, {
+ *             onSuccess: ({ product }) => {
+ *               console.log(product.variants)
+ *             }
+ *           })
+ *         }
+ *
+ *         // ...
+ *       }
+ *
+ *       export default ProductVariant
  *   - lang: Shell
  *     label: cURL
  *     source: |

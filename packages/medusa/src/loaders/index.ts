@@ -13,6 +13,7 @@ import { asValue } from "awilix"
 import { createMedusaContainer } from "medusa-core-utils"
 import { track } from "medusa-telemetry"
 import { EOL } from "os"
+import path from "path"
 import requestIp from "request-ip"
 import { Connection } from "typeorm"
 import { MedusaContainer } from "../types/global"
@@ -45,11 +46,11 @@ async function loadLegacyModulesEntities(configModules, container) {
   for (const [moduleName, moduleConfig] of Object.entries(configModules)) {
     const definition = ModulesDefinition[moduleName]
 
-    if (!definition.isLegacy) {
+    if (!definition?.isLegacy) {
       continue
     }
 
-    let modulePath = isString(moduleConfig)
+    const modulePath = isString(moduleConfig)
       ? moduleConfig
       : (moduleConfig as InternalModuleDeclaration).resolve ??
         (definition.defaultPackage as string)
@@ -67,7 +68,7 @@ async function loadLegacyModulesEntities(configModules, container) {
         continue
       }
 
-      const module = await import(modulePath)
+      const module = await import(modulePath as string)
 
       if (module.default?.models) {
         module.default.models.map((model) =>
@@ -184,7 +185,7 @@ export default async ({
   const expActivity = Logger.activity(`Initializing express${EOL}`)
   track("EXPRESS_INIT_STARTED")
   await expressLoader({ app: expressApp, configModule })
-  await passportLoader({ app: expressApp, container, configModule })
+  await passportLoader({ app: expressApp, configModule })
   const exAct = Logger.success(expActivity, "Express intialized") || {}
   track("EXPRESS_INIT_COMPLETED", { duration: exAct.duration })
 
@@ -215,7 +216,12 @@ export default async ({
 
   const apiActivity = Logger.activity(`Initializing API${EOL}`)
   track("API_INIT_STARTED")
-  await apiLoader({ container, app: expressApp, configModule })
+  await apiLoader({
+    container,
+    app: expressApp,
+    configModule,
+    featureFlagRouter,
+  })
   const apiAct = Logger.success(apiActivity, "API initialized") || {}
   track("API_INIT_COMPLETED", { duration: apiAct.duration })
 

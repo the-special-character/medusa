@@ -1,5 +1,5 @@
 const { Modules } = require("@medusajs/modules-sdk")
-const { Workflows } = require("@medusajs/workflows")
+const { Workflows } = require("@medusajs/core-flows")
 const DB_HOST = process.env.DB_HOST
 const DB_USERNAME = process.env.DB_USERNAME
 const DB_PASSWORD = process.env.DB_PASSWORD
@@ -65,6 +65,11 @@ module.exports = {
       scope: "internal",
       resources: "shared",
       resolve: "@medusajs/pricing",
+    },
+    [Modules.PROMOTION]: {
+      scope: "internal",
+      resources: "shared",
+      resolve: "@medusajs/promotion",
     },
   },
 }

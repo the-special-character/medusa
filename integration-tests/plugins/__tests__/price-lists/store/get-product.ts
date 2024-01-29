@@ -32,7 +32,7 @@ const env = {
   MEDUSA_FF_MEDUSA_V2: true,
 }
 
-describe("GET /store/products/:id", () => {
+describe.skip("GET /store/products/:id", () => {
   let dbConnection
   let appContainer
   let shutdownServer
@@ -91,12 +91,10 @@ describe("GET /store/products/:id", () => {
         {
           amount: 3000,
           currency_code: "usd",
-          rules: {},
         },
         {
           amount: 4000,
           currency_code: "usd",
-          rules: {},
         },
       ],
       rules: [],
